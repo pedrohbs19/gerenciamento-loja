@@ -1,73 +1,59 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Guia de Inicialização do Sistema
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este guia fornece um passo a passo para iniciar o sistema em seu ambiente local. Siga as instruções abaixo para configurar e executar o aplicativo.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Pré-requisitos
 
-## Description
+Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* **Node.js:** (Certifique-se de ter uma versão LTS instalada)
+* **npm:** (Geralmente instalado com o Node.js)
+* **Yarn:** (Pode ser instalado globalmente com `npm install --global yarn`)
+* **Docker:** (Certifique-se de que o Docker esteja instalado e em execução)
+* **Docker Compose:** (Geralmente instalado com o Docker Desktop)
 
-## Installation
+## Passo a Passo para Iniciar o Sistema
 
-```bash
-$ yarn install
-```
+1.  **Instalar o Yarn:**
+    Abra seu terminal e execute o seguinte comando para instalar o Yarn globalmente, caso ainda não o tenha:
+    ```bash
+    npm install --global yarn
+    ```
 
-## Running the app
+2.  **Instalar as Dependências:**
+    Navegue até o diretório raiz do projeto em seu terminal e execute o seguinte comando para instalar todas as dependências listadas no arquivo `package.json`:
+    ```bash
+    yarn add
+    ```
 
-```bash
-# development
-$ yarn run start
+3.  **Configurar o Arquivo `.env`:**
+    Na raiz do projeto, você encontrará um arquivo chamado `.env.example`.
+    * Duplique este arquivo e renomeie a cópia para `.env`.
+    * Abra o arquivo `.env` em um editor de texto e configure as variáveis de ambiente de acordo com as necessidades do seu sistema (por exemplo, configurações de banco de dados, chaves de API, etc.).
 
-# watch mode
-$ yarn run start:dev
+4.  **Subir a Imagem do Docker:**
+    Certifique-se de que o Docker esteja em execução em sua máquina. No terminal, ainda no diretório raiz do projeto, execute o seguinte comando para construir e iniciar os contêineres definidos no arquivo `docker-compose.yml`:
+    ```bash
+    docker-compose up -d
+    ```
+    O flag `-d` executa os contêineres em segundo plano.
 
-# production mode
-$ yarn run start:prod
-```
+5.  **Executar Migrações do Prisma:**
+    Após a inicialização do Docker e do banco de dados (se aplicável), execute o seguinte comando para aplicar as migrações definidas no seu schema do Prisma ao banco de dados:
+    ```bash
+    npx prisma db push
+    ```
 
-## Test
+6.  **Gerar o Client do Prisma:**
+    Em seguida, execute o seguinte comando para gerar o Prisma Client, que é uma interface de consulta de banco de dados auto-gerada:
+    ```bash
+    npx prisma generate
+    ```
 
-```bash
-# unit tests
-$ yarn run test
+7.  **Acessar a Documentação do Swagger:**
+    Após a conclusão de todos os passos acima, o sistema deverá estar em execução. A documentação da API pode ser acessada através do Swagger na seguinte URL em seu navegador:
+    ```
+    http://localhost:3000/docs
+    ```
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Agora você pode começar a interagir com o sistema seguindo a documentação do Swagger!
